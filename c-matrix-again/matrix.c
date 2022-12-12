@@ -52,14 +52,10 @@ matrix_int_t *matrix_int_multiply(matrix_int_t const *restrict matrix_1, matrix_
 
     matrix_int_t *result = matrix_int_create(matrix_1->row, matrix_2->col, 0);
     
-    for (size_t i = 0; i < matrix_1->row; ++i) {
-        for (size_t j = 0; j < matrix_2->row; ++j) {
-            int multResult = 0;
+    for (size_t i = 0; i < matrix_1->row; ++i)
+        for (size_t j = 0; j < matrix_2->row; ++j)
             for (size_t k = 0; k < matrix_2->row; ++k)
-                multResult += matrix_1->data[i][k] * matrix_2->data[j][k];
-            result->data[i][j] = multResult;
-        }
-    }
+                result->data[i][j] += matrix_1->data[i][k] * matrix_2->data[j][k];
     
     return result;
 }
