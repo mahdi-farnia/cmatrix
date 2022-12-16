@@ -39,7 +39,8 @@ inline matrix_int_t *matrix_int_cofactor(matrix_int_t const *restrict matrix, vo
 /** Fill matrix with given value */
 inline void matrix_int_fill(matrix_int_t *matrix, int fill) {
     for (size_t i = 0; i < matrix->col; ++i)
-        memset(matrix->data[i], fill, sizeof(int) * matrix->row);
+        for (size_t j = 0; j < matrix->row; ++j)
+            matrix->data[i][j] = fill;
 }
 
 void matrix_int_print(matrix_int_t *);
