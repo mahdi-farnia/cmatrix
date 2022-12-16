@@ -38,7 +38,7 @@ int main(int argc, const char * argv[]) {
     
     matrix_int_print(matrix);
     
-    matrix_int_t *m2 = matrix_int_cpy(matrix);
+    matrix_int_t *m2 = matrix_int_rotate(matrix, MATRIX_ROTATE_BACKWARD);
 
     matrix_int_print(m2);
 

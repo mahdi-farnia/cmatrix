@@ -17,6 +17,11 @@ typedef struct matrix_int_t {
     int **data;
 } matrix_int_t;
 
+typedef enum matrix_rotate_t: uint8_t {
+    MATRIX_ROTATE_FORWARD,
+    MATRIX_ROTATE_BACKWARD
+} matrix_rotate_t;
+
 matrix_int_t *matrix_int_create(size_t row, size_t col, int fill);
 
 /** Calculate summation of two matrixes and keeps the result in the first matrix */
@@ -28,7 +33,9 @@ void matrix_int_sub(matrix_int_t *restrict, matrix_int_t const *restrict);
 /** Creates new matrix with the dimension of first matrix row and second matrix column, Return NULL for invalid dimensions: m1->col != m2->row */
 matrix_int_t *matrix_int_multiply(matrix_int_t const *restrict, matrix_int_t const *restrict);
 
-// TODO: matrix_int_rotate, matrix_int_sort -> { diagonal, column, line }
+// TODO: matrix_int_sort -> { diagonal, column, line }
+
+matrix_int_t *matrix_int_rotate(matrix_int_t const*, matrix_rotate_t);
 
 inline matrix_int_t *matrix_int_cpy(matrix_int_t const *origin) {
     matrix_int_t *copy = matrix_int_create(origin->row, origin->col, 0);
