@@ -18,7 +18,9 @@ matrix_int_t *matrix_int_create(size_t row, size_t col, int fill) {
 
     for (size_t i = 0; i < col; ++i) {
         matrix->data[i] = malloc(sizeof(int) * row);
-        memset(matrix->data[i], fill, sizeof(int) * row);
+        for (size_t j = 0; j < row; ++j) {
+            matrix->data[i][j] = fill;
+        }
     }
 
     return matrix;
@@ -60,10 +62,12 @@ matrix_int_t *matrix_int_multiply(matrix_int_t const *restrict matrix_1, matrix_
     return result;
 }
 
+extern inline matrix_int_t *matrix_int_cpy(matrix_int_t const *);
+
 extern inline matrix_int_t *matrix_int_cofactor(matrix_int_t const *restrict, void *restrict);
 extern inline void matrix_int_fill(matrix_int_t *, int);
 
-void matrix_int_print(matrix_int_t *matrix) {
+void matrix_int_print(matrix_int_t const *matrix) {
     for (size_t i = 0; i < matrix->col; ++i) {
         printf("[ ");
         for (size_t j = 0; j < matrix->row; ++j)

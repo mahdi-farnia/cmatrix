@@ -37,7 +37,12 @@ int main(int argc, const char * argv[]) {
     matrix_int_scanf(matrix);
     
     matrix_int_print(matrix);
+    
+    matrix_int_t *m2 = matrix_int_cpy(matrix);
+
+    matrix_int_print(m2);
 
     matrix_free(matrix);
+    matrix_free(m2);
     return EXIT_SUCCESS;
 }

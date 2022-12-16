@@ -28,7 +28,16 @@ void matrix_int_sub(matrix_int_t *restrict, matrix_int_t const *restrict);
 /** Creates new matrix with the dimension of first matrix row and second matrix column, Return NULL for invalid dimensions: m1->col != m2->row */
 matrix_int_t *matrix_int_multiply(matrix_int_t const *restrict, matrix_int_t const *restrict);
 
-// TODO: matrix_int_cpy, matrix_int_rotate, matrix_int_sort -> { diagonal, column, line }
+// TODO: matrix_int_rotate, matrix_int_sort -> { diagonal, column, line }
+
+inline matrix_int_t *matrix_int_cpy(matrix_int_t const *origin) {
+    matrix_int_t *copy = matrix_int_create(origin->row, origin->col, 0);
+
+    for (size_t i = 0; i < origin->col; ++i)
+        memcpy(copy->data[i], origin->data[i], sizeof(int) * origin->row);
+    
+    return copy;
+}
 
 /** Pass NULL as last paramter to fill new matrix with the first index of given matrix */
 inline matrix_int_t *matrix_int_cofactor(matrix_int_t const *restrict matrix, void *restrict fill) {
@@ -43,7 +52,7 @@ inline void matrix_int_fill(matrix_int_t *matrix, int fill) {
             matrix->data[i][j] = fill;
 }
 
-void matrix_int_print(matrix_int_t *);
+void matrix_int_print(matrix_int_t const*);
 
 inline void matrix_free(matrix_int_t *matrix) {
     for (size_t i = 0; i < matrix->col; ++i)
