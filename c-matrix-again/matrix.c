@@ -18,8 +18,7 @@ matrix_int_t *matrix_int_create(size_t row, size_t col, int fill) {
 
     for (size_t i = 0; i < col; ++i) {
         matrix->data[i] = malloc(sizeof(int) * row);
-        for (size_t j = 0; j < row; ++j)
-            matrix->data[i][j] = fill;
+        memset(matrix->data[i], fill, sizeof(int) * row);
     }
 
     return matrix;
@@ -61,11 +60,8 @@ matrix_int_t *matrix_int_multiply(matrix_int_t const *restrict matrix_1, matrix_
     return result;
 }
 
-void matrix_int_fill(matrix_int_t *matrix, int fill) {
-    for (size_t i = 0; i < matrix->col; ++i)
-        for (size_t j = 0; j < matrix->row; ++j)
-            matrix->data[i][j] = fill;
-}
+extern inline matrix_int_t *matrix_int_cofactor(matrix_int_t const *restrict, void *restrict);
+extern inline void matrix_int_fill(matrix_int_t *, int);
 
 void matrix_int_print(matrix_int_t *matrix) {
     for (size_t i = 0; i < matrix->col; ++i) {
@@ -76,9 +72,4 @@ void matrix_int_print(matrix_int_t *matrix) {
     }
 }
 
-void matrix_free(matrix_int_t *matrix) {
-    for (size_t i = 0; i < matrix->col; ++i)
-        free(matrix->data[i]);
-    free(matrix->data);
-    free(matrix);
-}
+extern inline void matrix_free(matrix_int_t *);
