@@ -6,28 +6,38 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "matrix.h"
 
+static size_t get_dimension(void) {
+    size_t dimension = 0;
+    int assigned = 0;
+
+    do {
+        if (assigned == EOF)
+            exit(EXIT_FAILURE);
+
+        printf("Enter matrix dimension: ");
+        assigned = scanf("%lu", &dimension);
+    } while(assigned != 1);
+
+    return dimension;
+}
+static inline void matrix_int_scanf(matrix_int_t *matrix) {
+    for (size_t i = 0; i < matrix->col; ++i)
+        for (size_t j = 0; j < matrix->row; ++j)
+            scanf("%d", &matrix->data[i][j]);
+}
+
 int main(int argc, const char * argv[]) {
-    matrix_int_t *matrix = matrix_int_create(2, 2, 0);
+    size_t dimension = get_dimension();
+    matrix_int_t *matrix = matrix_int_create(dimension, dimension, 0);
     
-    printf("Before summation:\n");
+    // Fill matrix with input from user
+    matrix_int_scanf(matrix);
+    
     matrix_int_print(matrix);
 
-    matrix_int_t *temp = matrix_int_create(2, 2, 1);
-
-    matrix_int_sum(matrix, temp);
-
-    matrix_free(temp);
-
-    printf("After summation:\n");
-    matrix_int_print(matrix);
-
-    matrix_int_t *m2 = matrix_int_multiply(matrix, matrix);
-
-    printf("Result of power 2:\n");
-    matrix_int_print(m2);
-    
     matrix_free(matrix);
-    return 0;
+    return EXIT_SUCCESS;
 }
